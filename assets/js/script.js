@@ -25,21 +25,32 @@ var getFlightPrices = function(origin) {
                 var enumerableLength = Object.keys(data.data);
                 console.log(enumerableLength.length);
                 for (var i=0; i<enumerableLength.length; i++) {
-                    //console log airport arrays
-                    console.log(data.data[Object.keys(data.data)[i]][0]);
+                    if(data.data[Object.keys(data.data)[i]][1]) {
+                        //console log second flight option in the airport
+                        console.log(data.data[Object.keys(data.data)[i]][1]);
+                    } else if (data.data[Object.keys(data.data)[i]][0]) {
+                        //console log available cheap flights airport arrays
+                        console.log(data.data[Object.keys(data.data)[i]][0]);
+                    } else if (!data.data[Object.keys(data.data)[i]][0] || !data.data[Object.keys(data.data)[i]][1]) {
+                        //restart loop
+                        return;
+                    }
+
                 }
 
-            })
-        }
-    })
-}
+            });
+        };
+    });
+};
 
 var getFlightInput = function(event) {
     //prevent page refresh
     event.preventDefault();
-
+    //if iata city code exists
     if (originCity && originCity.value) {
+        //establish value as origin variable
         var origin = originCity.value;
+        //pass iata origin to getFlightPrices function
         getFlightPrices(origin);
     } else {
         alert('Please Enter a City Name');
