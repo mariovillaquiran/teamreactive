@@ -13,7 +13,22 @@ var getFlightPrices = function(origin) {
     fetch(flightAPI).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
+                //console log return response
                 console.log(data);
+                //console log all aiport objects
+                console.log(data[Object.keys(data)[1]]);
+                console.log(data.data);
+                //console log first airport array
+                console.log(data.data[Object.keys(data.data)[0]]);
+                //console log first value from first airport array
+                console.log(data.data[Object.keys(data.data)[0]][0]);
+                var enumerableLength = Object.keys(data.data);
+                console.log(enumerableLength.length);
+                for (var i=0; i<enumerableLength.length; i++) {
+                    //console log airport arrays
+                    console.log(data.data[Object.keys(data.data)[i]][0]);
+                }
+
             })
         }
     })
