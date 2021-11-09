@@ -25,8 +25,11 @@ var getFlightPrices = function(origin) {
                 var enumerableLength = Object.keys(data.data);
                 console.log(enumerableLength.length);
                 for (var i=0; i<enumerableLength.length; i++) {
-                    if(data.data[Object.keys(data.data)[i]][1]) {
+                    if(data.data[Object.keys(data.data)[i]][2]) {
                         //console log second flight option in the airport
+                        console.log(data.data[Object.keys(data.data)[i]][2]);
+                    } else if (data.data[Object.keys(data.data)[i]][1]) {
+                        //console log available cheap flights airport arrays
                         console.log(data.data[Object.keys(data.data)[i]][1]);
                     } else if (data.data[Object.keys(data.data)[i]][0]) {
                         //console log available cheap flights airport arrays
