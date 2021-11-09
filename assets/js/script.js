@@ -8,7 +8,7 @@ var getFlightPrices = function(origin) {
     //need to clear input
 
     //get variable for flighttracker api
-    var flightAPI = 'https://cors-anywhere.herokuapp.com/https://api.travelpayouts.com/v1/prices/cheap?origin='+origin+'&token=d6d40c4eb3a903fde45b4f150345dc6d';
+    var flightAPI = 'https://cors-anywhere.herokuapp.com/https://api.travelpayouts.com/v1/prices/cheap?currency=usd&origin='+origin+'&token=d6d40c4eb3a903fde45b4f150345dc6d';
 
     fetch(flightAPI).then(function(response) {
         if(response.ok) {
