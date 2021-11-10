@@ -3,6 +3,9 @@ var departDate;
 var originSearch = document.getElementById('searchBtn');
 var originCity = document.getElementById('city');
 var flightOptions = document.getElementById('flight-options');
+var expiryDate;
+var departDateTime;
+var returnDateTime;
 
 
 var getFlightPrices = function(origin) {
@@ -53,18 +56,23 @@ var getFlightPrices = function(origin) {
                         //create temp li
                         var flightOptionCardDepart = document.createElement('li');
                         //assign departure li text
-                        flightOptionCardDepart.textContent = 'Departure = ' + data.data[Object.keys(data.data)[i]][2].departure_at;
+                        departDateTime = new Date(data.data[Object.keys(data.data)[i]][2].departure_at);
+                        departDateTime.toString();
+                        flightOptionCardDepart.textContent = 'Departure = ' + departDateTime;
                         //create return element
                         var flightOptionReturn = document.createElement('li');
                         //add content to return
-                        flightOptionReturn.textContent = 'Return = '+data.data[Object.keys(data.data)[i]][2].return_at;
+                        returnDateTime = new Date(data.data[Object.keys(data.data)[i]][2].return_at);
+                        returnDateTime.toString();
+                        flightOptionReturn.textContent = 'Departure = ' + returnDateTime;
                         //create list item for price
                         var flightOptionPrice = document.createElement('li');
                         flightOptionPrice.textContent = 'Price (USD) = $'+data.data[Object.keys(data.data)[i]][2].price;
                         //create list item for expires
                         var flightOptionExpires = document.createElement('li');
-                        flightOptionExpires.textContent = 'Expires on = '+data.data[Object.keys(data.data)[i]][2].expires_at;
-                        
+                        expiryDate = new Date(data.data[Object.keys(data.data)[i]][2].expires_at);
+                        expiryDate.toString();
+                        flightOptionExpires.textContent = 'Expires on = '+ expiryDate;                        
                                 //add card body to card
                                 flightOptionCard.append(flightOptionCardBody);
                                 //add card title to card body
@@ -109,17 +117,22 @@ var getFlightPrices = function(origin) {
                         //create temp li
                         var flightOptionCardDepart = document.createElement('li');
                         //assign departure li text
-                        flightOptionCardDepart.textContent = 'Departure = ' + data.data[Object.keys(data.data)[i]][1].departure_at;
+                        departDateTime = new Date(data.data[Object.keys(data.data)[i]][1].departure_at);
+                        departDateTime.toString();
+                        flightOptionCardDepart.textContent = 'Departure = ' + departDateTime; 
                         //create return element
                         var flightOptionReturn = document.createElement('li');
                         //add content to return
-                        flightOptionReturn.textContent = 'Return = '+data.data[Object.keys(data.data)[i]][1].return_at;
-                        //create list item for price
+                        returnDateTime = new Date(data.data[Object.keys(data.data)[i]][1].return_at);
+                        returnDateTime.toString();
+                        flightOptionReturn.textContent = 'Departure = ' + returnDateTime;                        //create list item for price
                         var flightOptionPrice = document.createElement('li');
                         flightOptionPrice.textContent = 'Price (USD) = $'+data.data[Object.keys(data.data)[i]][1].price;
                         //create list item for expires
                         var flightOptionExpires = document.createElement('li');
-                        flightOptionExpires.textContent = 'Expires on = '+data.data[Object.keys(data.data)[i]][1].expires_at;
+                        expiryDate = new Date(data.data[Object.keys(data.data)[i]][1].expires_at);
+                        expiryDate.toString();
+                        flightOptionExpires.textContent = 'Expires on = '+ expiryDate;
                         
                                 //add card body to card
                                 flightOptionCard.append(flightOptionCardBody);
@@ -162,17 +175,19 @@ var getFlightPrices = function(origin) {
                         //create temp li
                         var flightOptionCardDepart = document.createElement('li');
                         //assign departure li text
-                        flightOptionCardDepart.textContent = 'Departure = ' + data.data[Object.keys(data.data)[i]][0].departure_at;
-                        //create return element
+                        departDateTime = new Date(data.data[Object.keys(data.data)[i]][0].departure_at);
+                        departDateTime.toString();
+                        flightOptionCardDepart.textContent = 'Departure = ' + departDateTime;                        //create return element
                         var flightOptionReturn = document.createElement('li');
                         //add content to return
-                        flightOptionReturn.textContent = 'Return = '+data.data[Object.keys(data.data)[i]][0].return_at;
-                        //create list item for price
+                        returnDateTime = new Date(data.data[Object.keys(data.data)[i]][0].return_at);
+                        returnDateTime.toString();
+                        flightOptionReturn.textContent = 'Departure = ' + returnDateTime;                        //create list item for price
                         var flightOptionPrice = document.createElement('li');
                         flightOptionPrice.textContent = 'Price (USD) = $'+data.data[Object.keys(data.data)[i]][0].price;
                         //create list item for expires
                         var flightOptionExpires = document.createElement('li');
-                        var expiryDate = new Date(data.data[Object.keys(data.data)[i]][0].expires_at);
+                        expiryDate = new Date(data.data[Object.keys(data.data)[i]][0].expires_at);
                         expiryDate.toString();
                         flightOptionExpires.textContent = 'Expires on = '+ expiryDate;
                         
