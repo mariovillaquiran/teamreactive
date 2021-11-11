@@ -138,7 +138,29 @@ var getFlightPrices = function(origin) {
 
             }});
         } else {
-            alert('Please Click Request Demo Button below and then the accompanying button on the next page');
+            //if no response from server ask user to request demo env
+            //clear flightOptions
+            flightOptions.innerHTML = '';
+            //create card container
+            var flightOptionCard = document.createElement('div');
+            //add card container class
+            flightOptionCard.classList.add('card', 'col-md', 'col-sm-12');
+            //create card body
+            var flightOptionCardBody = document.createElement('div');
+            //add card body class
+            flightOptionCardBody.classList.add('card-body');
+            //create title
+            var flightOptionCardTitle = document.createElement('h5')
+            //add title class
+            flightOptionCardTitle.classList.add('card-title');
+            //set title = city name
+            flightOptionCardTitle.textContent = 'Please Click Request Demo Button above and then the accompanying button on the next page';
+            //add card body to card
+            flightOptionCard.append(flightOptionCardBody);
+            //add card title to card body
+            flightOptionCardBody.append(flightOptionCardTitle);
+            //append daily card to daily card container
+            flightOptions.append(flightOptionCard);
         }
     })
   
@@ -154,7 +176,29 @@ var getFlightInput = function(event) {
         //pass iata origin to getFlightPrices function
         getFlightPrices(origin);
     } else {
-        alert('Please Enter a City Name');
+        //if user doesnt input any values, ask them to put in an IATA code
+        //clear flightOptions
+        flightOptions.innerHTML = '';
+        //create card container
+        var flightOptionCard = document.createElement('div');
+        //add card container class
+        flightOptionCard.classList.add('card', 'col-md', 'col-sm-12');
+        //create card body
+        var flightOptionCardBody = document.createElement('div');
+        //add card body class
+        flightOptionCardBody.classList.add('card-body');
+        //create title
+        var flightOptionCardTitle = document.createElement('h5')
+        //add title class
+        flightOptionCardTitle.classList.add('card-title');
+        //set title = city name
+        flightOptionCardTitle.textContent = 'Please enter a valid IATA Code (Ex: JFK, LGA, SFO, RDU, etc.)';
+        //add card body to card
+        flightOptionCard.append(flightOptionCardBody);
+        //add card title to card body
+        flightOptionCardBody.append(flightOptionCardTitle);
+        //append daily card to daily card container
+        flightOptions.append(flightOptionCard);
     }
 
 }
