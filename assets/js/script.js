@@ -40,7 +40,7 @@ var createElements = function (flightData, flightAirport) {
     //add content to return
     returnDateTime = new Date(flightData.return_at);
     returnDateTime.toString();
-    flightOptionReturn.textContent = 'Departure = ' + returnDateTime;
+    flightOptionReturn.textContent = 'Return = ' + returnDateTime;
     //create list item for price
     var flightOptionPrice = document.createElement('li');
     flightOptionPrice.textContent = 'Price (USD) = $'+flightData.price;
@@ -68,10 +68,8 @@ var createElements = function (flightData, flightAirport) {
 
 
 var getFlightPrices = function(origin) {
-    //need to clear input
+    //clear input
     flightOptions.innerHTML = '';
-
-    
 
     //get variable for flighttracker api
     var flightAPI = 'https://cors-anywhere.herokuapp.com/https://api.travelpayouts.com/v1/prices/cheap?currency=usd&origin='+origin+'&token=d6d40c4eb3a903fde45b4f150345dc6d';
