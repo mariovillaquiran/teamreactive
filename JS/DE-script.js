@@ -22,11 +22,34 @@ $(document).ready(function() {
         fetch(flightApi).then(function(response) {
             if(response.ok){
                 response.json().then(function(data) {
-                    console.log(data);
+                    console.log(data)
+                    displayAirports(data);
                 })
+            }
+            else {
+                alert ("server cant find relavent airport data!")
             }
         });
     
+    }
+
+    var displayAirports = function(airports){
+        var airportsArray = airports.airportsByCities
+        var iataCon = document.querySelector("#iataCodes");
+
+        for ( let i = 0; i < airportsArray.length; i++ ) {
+            var airportNames = airportsArray[i].codeIataAirport
+
+            var codeEl = document.createElement("div")
+            codeEl.classList = "card";
+
+            var codeTitle = document.createElement("h3")
+            codeTitle.textContent = airportNames;
+            codeTitle.classList = "card-title"
+
+            $(codeEl).append(codeTitle);
+            $(iataCon).append(codeEl);
+        }
     }
        
     
