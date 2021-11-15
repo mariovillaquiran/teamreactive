@@ -45,7 +45,7 @@ $(document).ready(function() {
 
             var codeTitle = document.createElement("h3")
             codeTitle.textContent = airportNames;
-            codeTitle.classList = "card-title"
+            codeTitle.classList = "card-title iata-info"
 
             $(codeEl).append(codeTitle);
             $(iataCon).append(codeEl);
