@@ -11,6 +11,8 @@ var iataHistory = JSON.parse(localStorage.getItem('iataHistory')) || [];
 
 
 
+
+
 var saveHistory = function(origin){
     //check to see if city exists in array currently, if not, add to array
     if (iataHistory.indexOf(origin) === -1) {
