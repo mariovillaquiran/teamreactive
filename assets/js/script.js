@@ -6,7 +6,21 @@ var flightOptions = document.getElementById('flight-options');
 var expiryDate;
 var departDateTime;
 var returnDateTime;
+var btnContainer = document.getElementById('button-container');
+var iataHistory = JSON.parse(localStorage.getItem('iataHistory')) || [];
 
+
+
+var saveHistory = function(origin){
+    //check to see if city exists in array currently, if not, add to array
+    if (iataHistory.indexOf(origin) === -1) {
+        //add city to city history
+        iataHistory.push(origin);
+        //save array to locaL storage
+        localStorage.setItem("iataHistory", JSON.stringify(iataHistory));
+    }
+
+}
 
 var createElements = function (flightData, flightAirport) {
     //create card container
@@ -166,6 +180,32 @@ var getFlightPrices = function(origin) {
   
 };
 
+var inputBtnValue = function(event) {
+        //prevent page refresh
+        event.preventDefault();
+    //get button iata value and run search for flight prices
+    getFlightPrices(event.target.textContent);
+
+}
+
+var historyBtn = function() {
+    //set button container to be empty
+    btnContainer.innerHTML = '';
+    //loop through localstorage of iata history length of array
+    for (var i=0; i<iataHistory.length; i++) {
+    //create button
+     var recentSearch = document.createElement('button');
+    recentSearch.classList.add('btn-secondary');
+     //set button text to name of input value
+     recentSearch.textContent = iataHistory[i];
+     //listen for click of recent searches, and when done, run inputBtnValue function
+     recentSearch.addEventListener('click', inputBtnValue);
+     //add button underneath searchbox container
+     btnContainer.append(recentSearch);
+    }
+     
+}
+
 var getFlightInput = function(event) {
     //prevent page refresh
     event.preventDefault();
@@ -175,6 +215,8 @@ var getFlightInput = function(event) {
         var origin = originCity.value;
         //pass iata origin to getFlightPrices function
         getFlightPrices(origin);
+        saveHistory(origin);
+        historyBtn();
     } else {
         //if user doesnt input any values, ask them to put in an IATA code
         //clear flightOptions
@@ -204,3 +246,5 @@ var getFlightInput = function(event) {
 }
 
 originSearch.addEventListener("click", getFlightInput);
+//call history buttons to bring back recent searches from local storage
+historyBtn();
