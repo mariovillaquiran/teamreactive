@@ -9,12 +9,17 @@ $(document).ready(function() {
     var returnDateTime;*/
     
     var getAp = function(event){
+        //prevent refresh
         event.preventDefault();
+        //city = cityname input box value
         var city = cityValEl.value
 
+        //if city is true
         if(city) {
+            //run getAirport of city value
             getAirport(city)
             console.log(city);
+            //clear input value
             cityValEl.value = ""
         }
         else {
@@ -29,6 +34,7 @@ $(document).ready(function() {
             if(response.ok){
                 response.json().then(function(data) {
                     console.log(data)
+                    //once city passed in, pass airport object to displayAirports function
                     displayAirports(data);
                 })
             }
@@ -41,7 +47,9 @@ $(document).ready(function() {
     }
 
     var displayAirports = function(airports){
+        //airportsArray = airports object
         var airportsArray = airports.airportsByCities
+        //get iataCodes element
         var iataCon = document.querySelector("#iataCodes");
 
         // Maxs create elemnt codes, need to be sorted to fit with my elements
@@ -180,11 +188,13 @@ $(document).ready(function() {
             })
           
         }; */
-
+        //for the array of IATA codes returned...
         for ( let i = 0; i < airportsArray.length; i++ ) {
+            //get airport code from i in array
             var airportCodes = airportsArray[i].codeIataAirport
+            //if airport codes exist
             if(airportCodes) {
-                getFlightPrices(airportCodes);
+                console.log(airportCodes);
             }
             else {
                 // to be replaced with modal
