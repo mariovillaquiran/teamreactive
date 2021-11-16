@@ -3,10 +3,10 @@ $(document).ready(function() {
     var cityValEl = document.querySelector("#city-val");
 
     // Maxs Global Variables 
-    var flightOptions = document.getElementById('flight-options');
+    /*var flightOptions = document.getElementById('flight-options');
     var expiryDate;
     var departDateTime;
-    var returnDateTime;
+    var returnDateTime;*/
     
     var getAp = function(event){
         event.preventDefault();
@@ -45,7 +45,7 @@ $(document).ready(function() {
         var iataCon = document.querySelector("#iataCodes");
 
         // Maxs create elemnt codes, need to be sorted to fit with my elements
-        var createElements = function (flightData, flightAirport) {
+        /*var createElements = function (flightData, flightAirport) {
             //create card container
             var flightOptionCard = document.createElement('div');
             //add card container class
@@ -101,10 +101,10 @@ $(document).ready(function() {
                     flightOptionCardOL.append(flightOptionExpires);
                     //append daily card to daily card container
                     flightOptions.append(flightOptionCard);
-        };
+        };*/
         
         // Maxs code integrated with mines to test functionality
-        var getFlightPrices = function(origin) {
+        /*var getFlightPrices = function(origin) {
             //clear input
             flightOptions.innerHTML = '';
         
@@ -179,12 +179,12 @@ $(document).ready(function() {
                 }
             })
           
-        };
+        }; */
 
         for ( let i = 0; i < airportsArray.length; i++ ) {
-            var airportNames = airportsArray[i].codeIataAirport
-            if(airportNames) {
-                getFlightPrices(airportNames);
+            var airportCodes = airportsArray[i].codeIataAirport
+            if(airportCodes) {
+                getFlightPrices(airportCodes);
             }
             else {
                 // to be replaced with modal
@@ -195,7 +195,7 @@ $(document).ready(function() {
             codeEl.classList = "card";
 
             var codeTitle = document.createElement("h3")
-            codeTitle.textContent = airportNames;
+            codeTitle.textContent = airportCodes;
             codeTitle.classList = "card-title iata-info"
 
             $(codeEl).append(codeTitle);
