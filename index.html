@@ -9,15 +9,33 @@
         <title>Last-Minute Travel App</title>
     </head>
     <body>
-        <div id="flight-options">
-            <form id="user-form" class="card-body row">
-                <label class="form-label" for="city">Airport IATA Code: </label>
-                <input name="city" id="city" type="text" autofocus="true" class="form-input" placeholder="LGA" />
-                <button id="searchBtn" type="submit" class="btn btn-primary">Get Flights</button>
-                    <a href="https://cors-anywhere.herokuapp.com/corsdemo"class="btn btn-primary" target="_blank">Request Demo</a>
-            </form>
-        </div>
+        <header>
+            <h2 class="text-center">TEST</h2>
+        </header>
+        <!-- DE all new html form to accept city name inputs -->
+        <main class="d-flex justify-content-between">
+            <div class="col-6 border-end border-dark">
+                <div>
+                    <form id="city-loc" class="d-grid mb-3">
+                    <label id="cities" for="city-input" class="form-label">City Search:</label>
+                    <input type="text" class="form-control" id="city-val" placeholder="City Name">
+                    <button type="submit" id="airports" class="btn btn-info mb-3">Search</button>
+                    </form>
+                </div>
+                <div id="iataCodes" class="d-grid h-100">
+                </div> 
+            </div>
 
+            <div class="col-6">
+                <form id="user-form" class="card-body row">
+                    <label class="form-label" for="city">Airport IATA Code: </label>
+                    <input name="city" id="city" type="text" autofocus="true" class="form-input" placeholder="LGA" />
+                    <button id="searchBtn" type="submit" class="btn btn-primary">Get Flights</button>
+                            <a href="https://cors-anywhere.herokuapp.com/corsdemo"class="btn btn-primary" target="_blank">Request Demo</a>
+                </form>
+                <div id="flight-options"></div>
+            </div>
+        </main>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src ="./assets/js/DE-script.js"></script>
