@@ -118,7 +118,7 @@ var getFlightPrices = function(origin) {
         flightOptions.append(flightOptionCard);
     } else {
 
-                //console log return response
+                /*//console log return response
                 console.log(data);
                 //console log all aiport objects
                 console.log(data[Object.keys(data)[1]]);
@@ -128,13 +128,23 @@ var getFlightPrices = function(origin) {
                 console.log(Object.keys(data.data)[0]);
                 //console log first value from first airport array
                 console.log(data.data[Object.keys(data.data)[0]][0]);
-                var enumerableLength = Object.keys(data.data);
-                console.log(enumerableLength.length);
-                for (var i=0; i<enumerableLength.length; i++) {
-                    if(data.data[Object.keys(data.data)[i]][2]) {
+                //var flights = Object.values(data.data);
+                //console.log(flights);*/
+
+                for (var key in data.data) {
+                    
+                        //console.log(flights[i]);
+                        //console.log(key);
+                        console.log(data.data[key]);
+                        for (var flightKey in  data.data[key]) {
+                            console.log(data.data[key][flightKey]);
+                            createElements(data.data[key][flightKey], key);
+                        }
+                    
+                    
+                    /*if(data.data[Object.keys(data.data)[i]][2]) {
                         //create flight cards for 3rd flight option in airport
                         createElements(data.data[Object.keys(data.data)[i]][2], Object.keys(data.data)[i]);
-                        
                         
                     } else if (data.data[Object.keys(data.data)[i]][1]) {
 
@@ -148,7 +158,7 @@ var getFlightPrices = function(origin) {
                     } else if (!data.data[Object.keys(data.data)[i]][0] || !data.data[Object.keys(data.data)[i]][1]) {
                         //restart loop
                         return;
-                    }
+                    }*/
 
                 }
 
