@@ -1,13 +1,32 @@
 $(document).ready(function() {
     var formEl= document.querySelector("#city-loc");
     var cityValEl = document.querySelector("#city-val");
-
-    // Maxs Global Variables 
-    /*var flightOptions = document.getElementById('flight-options');
-    var expiryDate;
-    var departDateTime;
-    var returnDateTime;*/
+    var modal = document.querySelector("#myModal");
+    var modalBody = document.querySelector("#modalBod");
+    var closeBtn = document.querySelector("#btn-close"); 
     
+    var saveSearch = function(key) {
+        // create a variable and name to store search inpu from user as json parsed array
+        var searchHistory = (localStorage.searchHistory) ? JSON.parse(localStorage.searchHistory) : [];
+        
+        // on click push data from input to created array, and stringify the local storage array value
+        document.querySelector("#submit-btn").addEventListener("click", () => {
+            searchHistory.push(key);
+            localStorage.searchHistory = JSON.stringify(searchHistory);
+        });
+
+        $("#cityData").innerHTML = " "
+        // get local storage array value and add it to page as an option element included in the datalist for form.
+        document.querySelector("#city-val").addEventListener("focus", () => {
+            var data = document.querySelector("datalist#cityData");
+            data.innerHTML = "";
+            searchHistory.forEach((search) => {
+                data.innerHTML = "<option>" + data.innerHTML;
+                data.querySelector("option").innerText = search;
+            });
+        });
+    }
+
     var getAp = function(event){
         //prevent refresh
         event.preventDefault();
@@ -18,15 +37,26 @@ $(document).ready(function() {
         if(city) {
             //run getAirport of city value
             getAirport(city)
-            console.log(city);
+            // run function to save search value as drop down data list
+            saveSearch(city)
             //clear input value
             cityValEl.value = ""
         }
         else {
-            // modal      
+            // clear the appended modal body div container of all child elements
+            $("#modalBod").empty()
+            // create a p element and fill it with warning text
+            var modalText = document.createElement("p")
+            modalText.textContent = "You need to input a city name to continue"
+
+            // apppend element to page in modal body variable
+            $(modalBody).append(modalText);
+
+            // call function
+            modalAlert();
         }
     }
-    
+   
     var getAirport= function(cityName) {
         var flightApi = "http://aviation-edge.com/v2/public/autocomplete?key=be6698-7715a2&city=" + cityName
 
@@ -36,14 +66,19 @@ $(document).ready(function() {
                     console.log(data)
                     //once city passed in, pass airport object to displayAirports function
                     displayAirports(data);
+
+                    if (data.success = false){  
+                    }
                 })
-            }
+            } 
             else {
-                // to be replaced with modal
-                alert ("server cant find relavent airport data!")
-            }
+                var modalText = document.createElement("p")
+                modalText.textContent = "server cant find relavent airport data!"
+                $(modalBody).append(modalText);
+
+                modalAlert();  
+            }     
         });
-    
     }
 
     var displayAirports = function(airports){
@@ -51,168 +86,84 @@ $(document).ready(function() {
         var airportsArray = airports.airportsByCities
         //get iataCodes element
         var iataCon = document.querySelector("#iataCodes");
+        // clear content of iata container div
+        iataCon.innerHTML = ""
 
-        // Maxs create elemnt codes, need to be sorted to fit with my elements
-        /*var createElements = function (flightData, flightAirport) {
-            //create card container
-            var flightOptionCard = document.createElement('div');
-            //add card container class
-            flightOptionCard.classList.add('card', 'col-md', 'col-sm-12');
-            //create card body
-            var flightOptionCardBody = document.createElement('div');
-            //add card body class
-            flightOptionCardBody.classList.add('card-body');
-            //create title
-            var flightOptionCardTitle = document.createElement('h5')
-            //add title class
-            flightOptionCardTitle.classList.add('card-title');
-            //set title = city name
-            flightOptionCardTitle.textContent = 'Flight to: '+ flightAirport;
-            //create text card
-            var flightOptionCardText = document.createElement('div');
-            //add card text class
-            flightOptionCardText.classList.add('card-text');
-            //create ordered list for data
-            var flightOptionCardOL = document.createElement('ul');
-            //create temp li
-            var flightOptionCardDepart = document.createElement('li');
-            //assign departure li text
-            departDateTime = new Date(flightData.departure_at);
-            departDateTime.toString();
-            flightOptionCardDepart.textContent = 'Departure = ' + departDateTime;
-            //create return element
-            var flightOptionReturn = document.createElement('li');
-            //add content to return
-            returnDateTime = new Date(flightData.return_at);
-            returnDateTime.toString();
-            flightOptionReturn.textContent = 'Return = ' + returnDateTime;
-            //create list item for price
-            var flightOptionPrice = document.createElement('li');
-            flightOptionPrice.textContent = 'Price (USD) = $'+flightData.price;
-            //create list item for expires
-            var flightOptionExpires = document.createElement('li');
-            expiryDate = new Date(flightData.expires_at);
-            expiryDate.toString();
-            flightOptionExpires.textContent = 'Expires on = '+ expiryDate;                        
-                    //add card body to card
-                    flightOptionCard.append(flightOptionCardBody);
-                    //add card title to card body
-                    flightOptionCardBody.append(flightOptionCardTitle);
-                    //add card text to body
-                    flightOptionCardBody.append(flightOptionCardText);
-                    //add ol to text container
-                    flightOptionCardText.append(flightOptionCardOL);
-                    //add list items to ol
-                    flightOptionCardOL.append(flightOptionCardDepart);
-                    flightOptionCardOL.append(flightOptionReturn);
-                    flightOptionCardOL.append(flightOptionPrice);
-                    flightOptionCardOL.append(flightOptionExpires);
-                    //append daily card to daily card container
-                    flightOptions.append(flightOptionCard);
-        };*/
-        
-        // Maxs code integrated with mines to test functionality
-        /*var getFlightPrices = function(origin) {
-            //clear input
-            flightOptions.innerHTML = '';
-        
-            //get variable for flighttracker api
-            var flightAPI = 'https://cors-anywhere.herokuapp.com/https://api.travelpayouts.com/v1/prices/cheap?currency=usd&origin='+origin+'&token=d6d40c4eb3a903fde45b4f150345dc6d';
-        
-            fetch(flightAPI).then(function(response) {
-                if(response.ok) {
-                    response.json().then(function(data) {
-        
-            //if no results for this airport, show no results card
-            if (!data.data[Object.keys(data.data)[0]]) {
-                //create card container
-                var flightOptionCard = document.createElement('div');
-                //add card container class
-                flightOptionCard.classList.add('card', 'col-md', 'col-sm-12');
-                //create card body
-                var flightOptionCardBody = document.createElement('div');
-                //add card body class
-                flightOptionCardBody.classList.add('card-body');
-                //create title
-                var flightOptionCardTitle = document.createElement('h5')
-                //add title class
-                flightOptionCardTitle.classList.add('card-title');
-                //set title = city name
-                flightOptionCardTitle.textContent = 'Oops! There have not been any results for this Airport recently.  Please try another one.';
-                //add card body to card
-                flightOptionCard.append(flightOptionCardBody);
-                //add card title to card body
-                flightOptionCardBody.append(flightOptionCardTitle);
-                //append daily card to daily card container
-                flightOptions.append(flightOptionCard);
-            } else {
-        
-                        //console log return response
-                        console.log(data);
-                        //console log all aiport objects
-                        console.log(data[Object.keys(data)[1]]);
-                        console.log(data.data);
-                        //console log first airport array
-                        console.log(data.data[Object.keys(data.data)[0]]);
-                        console.log(Object.keys(data.data)[0]);
-                        //console log first value from first airport array
-                        console.log(data.data[Object.keys(data.data)[0]][0]);
-                        var enumerableLength = Object.keys(data.data);
-                        console.log(enumerableLength.length);
-                        for (var i=0; i<enumerableLength.length; i++) {
-                            if(data.data[Object.keys(data.data)[i]][2]) {
-                                //create flight cards for 3rd flight option in airport
-                                createElements(data.data[Object.keys(data.data)[i]][2], Object.keys(data.data)[i]);
-                                
-                                
-                            } else if (data.data[Object.keys(data.data)[i]][1]) {
-        
-                                //create flight cards fo 2nd flight option in an airport
-                                createElements(data.data[Object.keys(data.data)[i]][1], Object.keys(data.data)[i]);
-        
-                            } else if (data.data[Object.keys(data.data)[i]][0]) {
-                                //create flight cards for 1st flight option in an airport
-                                createElements(data.data[Object.keys(data.data)[i]][0], Object.keys(data.data)[i]);
-                                
-                            } else if (!data.data[Object.keys(data.data)[i]][0] || !data.data[Object.keys(data.data)[i]][1]) {
-                                //restart loop
-                                return;
-                            }
-        
-                        }
-        
-                    }});
-                } else {
-                    alert('Please Click Request Demo Button below and then the accompanying button on the next page');
-                }
-            })
-          
-        }; */
-        //for the array of IATA codes returned...
+        //for the array of airport info returned
         for ( let i = 0; i < airportsArray.length; i++ ) {
-            //get airport code from i in array
+            //get airport information dependent on the index in the array
             var airportCodes = airportsArray[i].codeIataAirport
+            var airportNames = airportsArray[i].nameAirport
+            var airportCountry = airportsArray[i].nameCountry
+            var airportCountCode = airportsArray[i].codeIso2Country
+            var airportPhone = airportsArray[i].phone
             //if airport codes exist
             if(airportCodes) {
-                console.log(airportCodes);
+                console.log("success")
             }
             else {
-                // to be replaced with modal
-                alert("no info provided at this time")
+                // modal alert to let user know no information is recieved from server.
+                var modalText = document.createElement("p")
+                modalText.textContent = "There is no airport data for this location"
+                $(modalBody).append(modalText);
+
+                modalAlert();
             }
 
+            // create div elements for card, card title, card body, and card text with labels from each picked information variable.
             var codeEl = document.createElement("div")
             codeEl.classList = "card";
 
-            var codeTitle = document.createElement("h3")
-            codeTitle.textContent = airportCodes;
-            codeTitle.classList = "card-title iata-info"
+            var cardTitle = document.createElement("h3")
+            cardTitle.textContent = airportCodes;
+            cardTitle.classList = "card-title iata-info"
 
-            $(codeEl).append(codeTitle);
+            var cardBody = document.createElement("div")
+            cardBody.classList = "card-body"
+
+            var airNames = document.createElement("h3")
+            airNames.textContent = ("Airport Name:   " + airportNames)
+            airNames.classList = "card-title"
+
+            var airCountry = document.createElement("p")
+            airCountry.textContent = ("Airport Country:  " + airportCountry + "," + airportCountCode)
+            airCountry.classList = "card-text"
+
+            // append all card text divs to card body
+            $(cardBody).append(airNames);
+            $(cardBody).append(airCountry);
+            // if airport phone data exists create a card text element with phone number info and append to page, then color card body green for Sucess!!!
+            if( airportPhone !== "" ){
+                cardBody.classList = "card-body bg-success text-white";
+
+                var airPhone = document.createElement("p")
+                airPhone.textContent = ("Airport Phone #:  " + airportPhone )
+                airPhone.classList = "card-text"
+
+                $(cardBody).append(airPhone);
+            }
+
+            // append card-title, and card-body divs to card div on page
+            $(codeEl).append(cardTitle);
+            $(codeEl).append(cardBody);
+
+            // append card element to div container for cards with iata name
             $(iataCon).append(codeEl);
         }
 
     }
 
-    formEl.addEventListener("submit", getAp);   
+    // function to display modal alerts after each else conditional statement is triggered
+    var modalAlert = function(){   
+        // changes modal container on main index page to display default hidden content 
+        modal.style.display = "block";
+        
+        // on button click changed display back to hidden
+        closeBtn.onclick = function(){
+            modal.style.display = "none"
+        };
+    }
+
+    // on click submit run function getAp
+    formEl.addEventListener("submit", getAp);
 });
