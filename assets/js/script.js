@@ -7,7 +7,10 @@ var expiryDate;
 var departDateTime;
 var returnDateTime;
 var btnContainer = document.getElementById('button-container');
+//declare variable for iataHistory to get local storage of saved inquiries and if not available, then create array
 var iataHistory = JSON.parse(localStorage.getItem('iataHistory')) || [];
+//declare array for sorting flight
+var flightSortArray = [];
 
 
 
@@ -24,7 +27,21 @@ var saveHistory = function(origin){
 
 }
 
-var createElements = function (flightData, flightAirport) {
+var createElements = function (flightData) {
+    //fetch city name from iata code
+    fetch("https://cors-anywhere.herokuapp.com/https://airport-info.p.rapidapi.com/airport?iata="+flightData.iata, {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-host": "airport-info.p.rapidapi.com",
+            "x-rapidapi-key": "44e449c370mshf4738c3a1b33643p1713bbjsnb7b879e3b526"
+        }
+    })
+    .then(function(response) {
+            if(response.ok) {
+                response.json().then(function(data) {
+                    //add location to the flightKey in each flight
+                    flightData["city"] = data.location;
+    
     //create card container
     var flightOptionCard = document.createElement('div');
     //add card container class
@@ -37,8 +54,8 @@ var createElements = function (flightData, flightAirport) {
     var flightOptionCardTitle = document.createElement('h5')
     //add title class
     flightOptionCardTitle.classList.add('card-title');
-    //set title = city name
-    flightOptionCardTitle.textContent = 'Flight to: '+ flightAirport;
+    //set title = iata + location name
+    flightOptionCardTitle.textContent = 'Flight to: '+ flightData.iata+ ' / '+ flightData.city;
     //create text card
     var flightOptionCardText = document.createElement('div');
     //add card text class
@@ -80,6 +97,7 @@ var createElements = function (flightData, flightAirport) {
             flightOptionCardOL.append(flightOptionExpires);
             //append daily card to daily card container
             flightOptions.append(flightOptionCard);
+        })}});
 }
 
 
@@ -131,37 +149,33 @@ var getFlightPrices = function(origin) {
                 //var flights = Object.values(data.data);
                 //console.log(flights);*/
 
+                //loop through all key value pairs in data.data object
                 for (var key in data.data) {
-                    
-                        //console.log(flights[i]);
+                        //console log flight origin iata
                         //console.log(key);
-                        console.log(data.data[key]);
+                        //console log first flight from api response
+                        //console.log(data.data[key]);
                         for (var flightKey in  data.data[key]) {
-                            console.log(data.data[key][flightKey]);
-                            createElements(data.data[key][flightKey], key);
+                            //assign iata code to current object
+                            data.data[key][flightKey]["iata"] = key;
+                            
+                            //push each value to the flightSortArray
+                            flightSortArray.push(data.data[key][flightKey]);
                         }
-                    
-                    
-                    /*if(data.data[Object.keys(data.data)[i]][2]) {
-                        //create flight cards for 3rd flight option in airport
-                        createElements(data.data[Object.keys(data.data)[i]][2], Object.keys(data.data)[i]);
-                        
-                    } else if (data.data[Object.keys(data.data)[i]][1]) {
 
-                        //create flight cards fo 2nd flight option in an airport
-                        createElements(data.data[Object.keys(data.data)[i]][1], Object.keys(data.data)[i]);
-
-                    } else if (data.data[Object.keys(data.data)[i]][0]) {
-                        //create flight cards for 1st flight option in an airport
-                        createElements(data.data[Object.keys(data.data)[i]][0], Object.keys(data.data)[i]);
-                        
-                    } else if (!data.data[Object.keys(data.data)[i]][0] || !data.data[Object.keys(data.data)[i]][1]) {
-                        //restart loop
-                        return;
-                    }*/
-
+                
+            }
+                //console.log(flightSortArray[0].price);
+                //sort flights array by price key/value pair in ascending order
+                flightSortArray.sort(function(a,b) {
+                    return a.price - b.price;                
+                });
+                //console.log(flightSortArray);
+                //for each element in the flightSortArray
+                for (var i=0; i<flightSortArray.length; i++) {
+                    //create elements for each flight
+                    createElements(flightSortArray[i]);
                 }
-
             }});
         } else {
             //if no response from server ask user to request demo env
