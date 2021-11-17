@@ -10,8 +10,12 @@
         <link rel="stylesheet" href="./assets/style.css">
         <title>Skipt</title>
     </head>
-    <body>
+
+    <body>    
         <header>
+
+            <h2 class="text-center">TEST</h2>
+        </header>
 <!-- nav bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">          <img src="./assets/skipt.png" alt="logo"/>  </div>
@@ -30,18 +34,36 @@
     
         <!-- DE all new html form to accept city name inputs -->
         <main class="d-flex justify-content-between">
+            <!-- modal div container, by default hidden on page to be shown upon trigger by the user -->
+            <div class="modal" id="myModal" tabindex="-1">
+                <!-- Div containers and Bootstrap classes to define layout of modal -->
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Alert!</h5>
+                        </div>
+                        <div class="modal-body" id="modalBod"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="btn-close" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- DE all new html form to accept city name inputs -->
             <div class="col-6 border-end border-dark">
                 <div>
                     <form id="city-loc" class="d-grid mb-3">
                     <label id="cities" for="city-input" class="form-label">City Search:</label>
-                    <input type="text" class="form-control" id="city-val" placeholder="City Name">
-                    <button type="submit" id="airports" class="btn btn-info mb-3">Search</button>
+                    <input type="text" class="form-control" id="city-val" placeholder="City Name" list="cityData">
+                    <button type="submit" id="submit-btn" class="btn btn-info mb-3">Search</button>
+                    <datalist id="cityData"></datalist>
                     </form>
                 </div>
                 <div id="iataCodes" class="d-grid h-100">
                 </div> 
             </div>
 
+            <!-- Form input to accept and store airport locations by their iata codes -->
             <div class="col-6">
                 <form id="user-form" class="card-body row">
                     <label class="form-label" for="city">Airport IATA Code: </label>
