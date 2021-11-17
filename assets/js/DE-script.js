@@ -58,7 +58,7 @@ $(document).ready(function() {
     }
    
     var getAirport= function(cityName) {
-        var flightApi = "http://aviation-edge.com/v2/public/autocomplete?key=be6698-7715a2&city=" + cityName
+        var flightApi = "https://aviation-edge.com/v2/public/autocomplete?key=be6698-7715a2&city=" + cityName
 
         fetch(flightApi).then(function(response) {
             if(response.ok){
