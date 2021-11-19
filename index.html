@@ -65,10 +65,15 @@
             <!-- Form input to accept and store airport locations by their iata codes -->
             <div class="col-6">
                 <form id="user-form" class="card-body row">
-                    <label class="form-label" for="city">Airport IATA Code: </label>
+                    <label class="form-label" for="city">Required: Departure Airport IATA Code: </label>
                     <input name="city" id="city" type="text" autofocus="true" class="form-input" placeholder="LGA" />
+                    <label class="form-label" for="depart-date">Optional: Choose Month of Departure:</label>
+                    <input name="depart-date" id="depart-date" type="date"/>
+                    <label class="form-label" for="city-destination">Optional: Destination Airport IATA Code: </label>
+                    <input name="city-destination" id="city-destination" type="text" autofocus="true" class="form-input" placeholder="SFO" />
                     <button id="searchBtn" type="submit" class="btn btn-primary">Get Flights</button>
                             <a href="https://cors-anywhere.herokuapp.com/corsdemo"class="btn btn-primary" target="_blank">Request Demo</a>
+                    <label class="form-label" for="city-destination">Recently Searched Departure Locations: </label>
                     <div id="button-container" class="container"></div>
                 </form>
                 <div id="flight-options"></div>
