@@ -166,7 +166,6 @@ var getFlightPrices = function(origin,depart,destination) {
                 console.log(data);
                 //console log all aiport objects
                 console.log(data[Object.keys(data)[1]]);
-                console.log(data.data);
                 //console log first airport array
                 console.log(data.data[Object.keys(data.data)[0]]);
                 console.log(Object.keys(data.data)[0]);
@@ -174,6 +173,7 @@ var getFlightPrices = function(origin,depart,destination) {
                 console.log(data.data[Object.keys(data.data)[0]][0]);
                 //var flights = Object.values(data.data);
                 //console.log(flights);*/
+                console.log(data);
 
                 //loop through all key value pairs in data.data object
                 for (var key in data.data) {
@@ -184,14 +184,13 @@ var getFlightPrices = function(origin,depart,destination) {
                         for (var flightKey in  data.data[key]) {
                             //assign iata code to current object
                             data.data[key][flightKey]["iata"] = key;
-                            
                             //push each value to the flightSortArray
                             flightSortArray.push(data.data[key][flightKey]);
                         }
 
                 
             }
-                //console.log(flightSortArray[0].price);
+                //console.log(flightSortArray);
                 //sort flights array by price key/value pair in ascending order
                 flightSortArray.sort(function(a,b) {
                     return a.price - b.price;                
