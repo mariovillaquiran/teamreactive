@@ -36,6 +36,7 @@ Have a quality README (with unique name, description, technologies used, screens
 
 ## Mock-Up
 
+<img width="1381" alt="Screen Shot 2021-11-21 at 6 55 56 PM" src="https://user-images.githubusercontent.com/90975246/142784320-596f24d9-bb4e-4f05-876f-a0bf34a9ef47.png">
 
 
 # Lincense
