@@ -14,7 +14,6 @@
     <body>    
         <header>
 
-            <h2 class="text-center">TEST</h2>
         </header>
 <!-- nav bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -29,28 +28,12 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 offset-md-3 travel mt-20">
-            Looking for somewhere to go?  </div>
-     </div>
-    
+            Looking for somewhere to go?  </div> 
+          </div>
         <!-- DE all new html form to accept city name inputs -->
         <main class="d-flex justify-content-between">
-            <!-- modal div container, by default hidden on page to be shown upon trigger by the user -->
-            <div class="modal" id="myModal" tabindex="-1">
-                <!-- Div containers and Bootstrap classes to define layout of modal -->
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Alert!</h5>
-                        </div>
-                        <div class="modal-body" id="modalBod"></div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="btn-close" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- DE all new html form to accept city name inputs -->
-            <div class="col-6 border-end border-dark">
+            <div class="col-md-6 border-end border-dark col-12">
                 <div>
                     <form id="city-loc" class="d-grid mb-3">
                     <label id="cities" for="city-input" class="form-label">City Search:</label>
@@ -62,14 +45,18 @@
                 <div id="iataCodes" class="d-grid h-100">
                 </div> 
             </div>
-
             <!-- Form input to accept and store airport locations by their iata codes -->
-            <div class="col-6">
+            <div class="col-md-6 col-12">
                 <form id="user-form" class="card-body row">
-                    <label class="form-label" for="city">Airport IATA Code: </label>
+                    <label class="form-label" for="city">Required: Departure Airport IATA Code: </label>
                     <input name="city" id="city" type="text" autofocus="true" class="form-input" placeholder="LGA" />
+                    <label class="form-label" for="depart-date">Optional: Choose Month of Departure:</label>
+                    <input name="depart-date" id="depart-date" type="date"/>
+                    <label class="form-label" for="city-destination">Optional: Destination Airport IATA Code: </label>
+                    <input name="city-destination" id="city-destination" type="text" autofocus="true" class="form-input" placeholder="SFO" />
                     <button id="searchBtn" type="submit" class="btn btn-primary">Get Flights</button>
                             <a href="https://cors-anywhere.herokuapp.com/corsdemo"class="btn btn-primary" target="_blank">Request Demo</a>
+                    <label class="form-label" for="city-destination">Recently Searched Departure Locations: </label>
                     <div id="button-container" class="container"></div>
                 </form>
                 <div id="flight-options"></div>
