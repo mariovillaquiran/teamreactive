@@ -66,18 +66,16 @@ $(document).ready(function() {
                     console.log(data)
                     //once city passed in, pass airport object to displayAirports function
                     displayAirports(data);
-
-                    if (data.success = false){  
-                    }
                 })
-            } 
-            else {
-                var modalText = document.createElement("p")
-                modalText.textContent = "server cant find relavent airport data!"
-                $(modalBody).append(modalText);
+                .catch(function(error){
+                    $("#modalBod").empty()
+                    var modalText = $("<p>").text("server cant find relavent airport data!")
+                    $(modalBody).append(modalText);
 
-                modalAlert();  
-            }     
+                    modalAlert();  
+                });
+            } 
+            else {}     
         });
     }
 
@@ -111,46 +109,41 @@ $(document).ready(function() {
             }
 
             // create div elements for card, card title, card body, and card text with labels from each picked information variable.
-            var codeEl = document.createElement("div")
-            codeEl.classList = "card";
+            var codeEl = $("<div>").addClass("card col-lg-4 col-md-6")
 
-            var cardTitle = document.createElement("h3")
-            cardTitle.textContent = airportCodes;
-            cardTitle.classList = "card-title iata-info"
+            var cardTitle = $("<button>").addClass("card-header bg-dark text-light iata-info").text(airportCodes)
 
-            var cardBody = document.createElement("div")
-            cardBody.classList = "card-body"
+            var cardBody = $("<div>").addClass("card-body border-top border-3 border-dark").attr("id", "cardBtn").attr("type", "button")
 
-            var airNames = document.createElement("h3")
-            airNames.textContent = ("Airport Name:   " + airportNames)
-            airNames.classList = "card-title"
+            var airNames = $("<h4>").addClass("card-title").text("Airport Name:   " + airportNames);
 
-            var airCountry = document.createElement("p")
-            airCountry.textContent = ("Airport Country:  " + airportCountry + "," + airportCountCode)
-            airCountry.classList = "card-text"
+            var airCountry = $("<p>").addClass("card-text").text("Airport Country:  " + airportCountry + "," + airportCountCode);
 
             // append all card text divs to card body
             $(cardBody).append(airNames);
             $(cardBody).append(airCountry);
             // if airport phone data exists create a card text element with phone number info and append to page, then color card body green for Sucess!!!
             if( airportPhone !== "" ){
-                cardBody.classList = "card-body bg-success text-white";
+                $(cardBody).addClass("card-body border-top border-3 border-dark bg-success bg-gradient text-white");
 
-                var airPhone = document.createElement("p")
-                airPhone.textContent = ("Airport Phone #:  " + airportPhone )
-                airPhone.classList = "card-text"
-
+                var airPhone = $("<p>").addClass("card-text").text("Airport Phone #:  " + airportPhone )
+ 
                 $(cardBody).append(airPhone);
             }
 
             // append card-title, and card-body divs to card div on page
             $(codeEl).append(cardTitle);
             $(codeEl).append(cardBody);
-
+            
             // append card element to div container for cards with iata name
             $(iataCon).append(codeEl);
-        }
 
+            $(cardTitle).click(getCode = function() {
+                var searchEl = $(this).text()
+                $("#city").attr("value", searchEl)
+            })
+
+        }
     }
 
     // function to display modal alerts after each else conditional statement is triggered
