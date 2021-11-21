@@ -13,7 +13,9 @@ body {
     font-size: 110%;
     background-color: #FFF;
     background-image: url("Background.png");
-    padding: 0;    
+    padding: 0; 
+    text-align: center;   
+    background-repeat: no-repeat;
 }
 
 
@@ -28,8 +30,10 @@ body {
     color: #000;
 }
 
-.btn {
+.btn, #searchBtn{
     margin: 5px 0px;
+    background-color: aqua;
+    color: black;
 }
 
 .iata-info {
@@ -37,3 +41,13 @@ body {
     font-weight: bold;
 }
 
+@media(max-width: 775px) {
+   main.d-flex {
+    flex-direction:column;
+    width:100%;
+   }
+   main.d-flex div.border-end {
+       border: none !important;
+   }
+
+}
