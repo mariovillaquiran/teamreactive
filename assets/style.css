@@ -15,6 +15,7 @@ body {
     background-image: url("Background.png");
     padding: 0; 
     text-align: center;   
+    background-repeat: no-repeat;
 }
 
 
@@ -36,3 +37,13 @@ body {
 
 
 
+@media(max-width: 775px) {
+   main.d-flex {
+    flex-direction:column;
+    width:100%;
+   }
+   main.d-flex div.border-end {
+       border: none !important;
+   }
+
+}
