@@ -138,6 +138,7 @@ $(document).ready(function() {
             // append card element to div container for cards with iata name
             $(iataCon).append(codeEl);
 
+            // on click add card title element text to search input for form that accepts iata codes
             $(cardTitle).click(getCode = function() {
                 var searchEl = $(this).text()
                 $("#city").attr("value", searchEl)
